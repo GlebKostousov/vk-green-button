@@ -52,3 +52,14 @@ uv run --with-requirements requirements-dev.txt pytest tests/test_integration.py
 - `test_architecture.py` — детектор не использует Appium и UIAutomator
 
 На телефоне та же команда запуска. Код 0 и нажатая кнопка на экране, либо код 1 и сообщение, что кнопки нет.
+
+## Перед коммитом
+
+Один раз из папки проекта:
+
+```bash
+uv run pre-commit install
+uv run pre-commit install --hook-type commit-msg
+```
+
+Дальше перед каждым коммитом сами запускаются ruff, mypy и проверка сообщения. Сообщение в формате `feat: что сделано`.
