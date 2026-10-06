@@ -1,0 +1,152 @@
+[build-system]
+requires = ["setuptools==82.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "android-green-button"
+version = "0.1.0"
+description = "Найти зелёную кнопку на экране Android и нажать её через ADB"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy==2.3.5", "opencv-python-headless==4.13.0.92"]
+
+[project.scripts]
+green-button = "green_button.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["green_button*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = ["integration: настоящий локальный процесс, телефон не нужен"]
+
+[tool.coverage.run]
+branch = true
+source = ["green_button"]
+concurrency = ["thread"]
+omit = ["green_button/__main__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+precision = 2
+fail_under = 80
+
+[tool.ruff]
+line-length = 88
+required-version = ">=0.14.3"
+target-version = "py312"
+indent-width = 4
+src = ["green_button", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "FAST",
+  "ANN",
+  "ASYNC",
+  "I",
+  "F",
+  "S",
+  "BLE",
+  "FBT",
+  "B",
+  "COM",
+  "C4",
+  "DTZ",
+  "T10",
+  "EM",
+  "ISC",
+  "ICN",
+  "LOG",
+  "G",
+  "INP",
+  "PIE",
+  "T20",
+  "PYI",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SLF",
+  "SIM",
+  "SLOT",
+  "TC",
+  "TID",
+  "ARG",
+  "PTH",
+  "FLY",
+  "C90",
+  "PD",
+  "N",
+  "PERF",
+  "E",
+  "W",
+  "D",
+  "PGH",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "UP",
+  "FURB",
+  "TRY",
+  "RUF",
+]
+ignore = [
+  "COM812",
+  "S101",
+  "RUF001",
+  "RUF002",
+  "RUF003",
+  "TC006",
+  "D104",
+  "D415",
+  "D400",
+  "D203",
+  "D212",
+  "E402",
+  "D202",
+  "D205",
+  "SIM210",
+  "FBT001",
+  "E501",
+  "D401",
+  "TRY300",
+  "INP001",
+  "B008",
+]
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "parents"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 3
+
+[tool.ruff.lint.pylint]
+max-returns = 4
+max-branches = 6
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["PLR0913", "PLR2004", "SLF001", "S603", "S607", "S105", "S106", "T201", "D"]
+"green_button/cli.py" = ["T201"]
+"main.py" = ["T201"]
+"green_button/process.py" = ["S603", "S607"]
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+pretty = true
+follow_untyped_imports = true
+warn_unreachable = true
+enable_error_code = ["ignore-without-code"]
+files = ["green_button", "tests", "main.py"]
